@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //RSS link
-    private final String RSS_link="http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
+    private  String RSS_link="http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
     private final String RSS_to_Json_API = "https://api.rss2json.com/v1/api.json?rss_url=";
 
     @Override
@@ -41,10 +41,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("News");
+        toolbar.setTitle("Chronus");
         setSupportActionBar(toolbar);
         s = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
         bm = (BottomNavigationView)findViewById(R.id.navigation);
+
+
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager  = new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
@@ -63,22 +65,32 @@ public class MainActivity extends AppCompatActivity {
         bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-               int it = bm.getSelectedItemId();
-
-               if(it == R.id.menu_home)
-               {
-                   loadRSS();
-               }
-               else if(it == R.id.menu_trend)
-               {
-                   Intent m = new Intent(getApplicationContext(),trending.class);
-                   startActivity(m);
-                   finish();
-               }
-               else if(it == R.id.menu_sup)
-               {
-                   loadRSS();
-               }
+                switch (item.getItemId())
+                {
+                    case R.id.menu_home:
+                        RSS_link = "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
+                        loadRSS();
+                        break;
+                    case R.id.menu_trend:
+                        Intent m = new Intent(getApplicationContext(),trending.class);
+                        startActivity(m);
+                        finish();
+                        break;
+                    case R.id.menu_sup:
+                        toolbar.setTitle("Feeling Bored.....");
+                        String[] url = new String[]{"http://rss.nytimes.com/services/xml/rss/nyt/Arts.xml","http://rss.nytimes.com/services/xml/rss/nyt/Travel.xml",
+                                "http://rss.nytimes.com/services/xml/rss/nyt/RealEstate.xml","http://rss.nytimes.com/services/xml/rss/nyt/Space.xml","http://rss.nytimes.com/services/xml/rss/nyt/Environment.xml",
+                                "http://rss.nytimes.com/services/xml/rss/nyt/Movies.xml","http://rss.nytimes.com/services/xml/rss/nyt/Books.xml",
+                                "http://rss.nytimes.com/services/xml/rss/nyt/Music.xml","http://rss.nytimes.com/services/xml/rss/nyt/HealthCarePolicy.xml",
+                                "http://rss.nytimes.com/services/xml/rss/nyt/EnergyEnvironment.xml","http://rss.nytimes.com/services/xml/rss/nyt/MediaandAdvertising.xml",
+                                "http://rss.nytimes.com/services/xml/rss/nyt/Nutrition.xml"};
+                        int size = url.length;
+                        double r = Math.random();
+                        int ra = (int) (r*(size-1));
+                        RSS_link = url[ra];
+                        loadRSS();
+                        break;
+                }
                 return true;
             }
         });

@@ -15,13 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/postThumb"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_ref"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="5dp"/>
+
 
         <TextView
             android:text="Title"
